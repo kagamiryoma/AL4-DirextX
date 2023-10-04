@@ -9,6 +9,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include <memory>
 
 /// <summary>
 /// ゲームシーン
@@ -52,7 +53,7 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 	// 自キャラ
-	Player* player_ = nullptr;
+	std::unique_ptr<Player> player_;
 
 	/// <summary>
 	/// ゲームシーン用

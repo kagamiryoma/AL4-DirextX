@@ -5,10 +5,7 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
-	// モデルの開放
-	delete model_;
-	// 自キャラの開放
-	delete player_;
+	
 }
 
 void GameScene::Initialize() {
@@ -23,7 +20,7 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 	// 自キャラの生成
-	player_ = new Player();
+	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 }
