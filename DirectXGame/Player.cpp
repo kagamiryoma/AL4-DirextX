@@ -9,6 +9,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	textureHandle_ = textureHandle;
 
 	worldTransform_.Initialize();
+
+	input_ = Input::GetInstance();
 }
 
 void Player::Update() {
