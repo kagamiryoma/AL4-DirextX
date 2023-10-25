@@ -20,11 +20,11 @@ void GameScene::Initialize() {
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 	// 3Dモデルの生成
-	model_.reset(Model::Create());
+	model_.reset(Model::CreateFromOBJ("float", true));
 	// 自キャラの生成
 	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
-	player_->Initialize(model_.get(), textureHandle_);
+	player_->Initialize(model_.get());
 	// 天球の3Dモデル
 	modelSkydome_.reset (Model::CreateFromOBJ("skydome", true));
 	// 天球の生成

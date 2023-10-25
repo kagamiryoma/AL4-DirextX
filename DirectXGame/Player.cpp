@@ -1,12 +1,12 @@
 ﻿#include "Player.h"
 #include <cassert>
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model) {
 	// NULLポインタチェック
 	assert(model);
 
 	model_ = model;
-	textureHandle_ = textureHandle;
+	//textureHandle_ = textureHandle;
 
 	worldTransform_.Initialize();
 
@@ -20,5 +20,5 @@ void Player::Update() {
 
 void Player::Draw(ViewProjection& viewProjection) {
 	// 3Dモデルを描画
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection);
 }
