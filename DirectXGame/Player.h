@@ -3,6 +3,8 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "Input.h"
+#include "MathUntilityForText.h"
+
 
 /// <summary>
 /// 自キャラ
