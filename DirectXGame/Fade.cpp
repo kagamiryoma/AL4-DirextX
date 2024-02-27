@@ -12,12 +12,33 @@ void Fade::Initialize(Sprite* sprite, uint32_t textureHandle) {
 
 void Fade::Update() { 
 	sprite_->SetColor({1, 1, 1, timer_});
-	timer_-=0.01f; 
-	if (timer_ < 0) {
-		timer_ = 0;
+	if (mode_ == 1) {
+		timer_ -= 0.01f; 
+		if (timer_ < 0) {
+			timer_ = 0;
+		}
+	}
+	if (mode_ == 2) {
+		timer_ += 0.01f;
+		if (timer_ > 1) {
+			timer_ = 1;
+			endFlag_ = true;
+		}
 	}
 }
 
 void Fade::Draw() {sprite_->Draw(); }
 
-void Fade::FadeInStart() { timer_ = 1.0f; }
+void Fade::FadeInStart() { 
+	timer_ = 1.0f; 
+	mode_ = 1;
+	endFlag_ = false;
+}
+
+void Fade::FadeOutStart() {
+	if (mode_ != 2) {
+		timer_ = 0.0f;
+		mode_ = 2;
+		endFlag_ = false;
+	}
+}

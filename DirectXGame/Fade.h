@@ -10,6 +10,9 @@ public:
 	void Draw();
 
 	void FadeInStart();
+	void FadeOutStart();
+
+	bool IsEnd() { return endFlag_; }
 
 private:
 	// 背景
@@ -17,4 +20,9 @@ private:
 	Sprite* sprite_;
 
 	float timer_ = 1.0f;
+
+	// フェードモード（１ : フェードイン、 ２ : フェードアウト）
+	uint32_t mode_ = 1u;
+
+	bool endFlag_ = false;
 };

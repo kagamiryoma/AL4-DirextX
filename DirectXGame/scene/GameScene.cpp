@@ -133,25 +133,33 @@ void GameScene::Update() {
 			}
 		}
 		if (hitCount_ >= 10) {
+			fade_->FadeOutStart();
+		}
+		if (fade_->IsEnd() == true) {
 			sceneMode_ = 2;
 			fade_->FadeInStart();
 		}
 		break;
 	case 1:
 		if (title_->Update() == true) {
-			sceneMode_ = 0u;
-			hitCount_ = 0;
-			fade_->FadeInStart();
+			fade_->FadeOutStart();
+		}
+		if (fade_->IsEnd() == true) {
+				sceneMode_ = 0u;
+				hitCount_ = 0;
+				fade_->FadeInStart();
 		}
 		break;
 	case 2:
 		if (gameClear_->Update() == true) {
-			sceneMode_ = 1u;
-			fade_->FadeInStart();
+			    fade_->FadeOutStart();
+		}
+		if (fade_->IsEnd() == true) {
+			    sceneMode_ = 1u;
+			    fade_->FadeInStart();
 		}
 		break;
 	}
-
 	fade_->Update();
 }
 
