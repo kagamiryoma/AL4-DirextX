@@ -63,14 +63,18 @@ void GameScene::Initialize() {
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(modelEnemy_.get());
 	
-	// テクスチャ
+	// タイトル背景
 	textureHandleTitle_ = TextureManager::Load("title.png");
-	//スプライトの生成
 	spriteTitle_.reset(Sprite::Create(textureHandleTitle_, {0, 0}));
 
-	// 敵の生成
+	// キー
+	textureHandleKey_ = TextureManager::Load("enter.png");
+	spriteKey_.reset(Sprite::Create(textureHandleKey_, {400, 500}));
+
+	// タイトルの生成
 	title_ = std::make_unique<Title>();
-	title_->Initialize(spriteTitle_.get(),textureHandleTitle_);
+	title_->Initialize(
+	    spriteTitle_.get(), textureHandleTitle_, spriteKey_.get(), textureHandleKey_);
 
 	// 軸方向表示の表示を有効にする
 	//AxisIndicator::GetInstance()->SetVisible(true);

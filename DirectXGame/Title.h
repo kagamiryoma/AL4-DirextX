@@ -4,17 +4,21 @@
 
 class Title {
 public:
-	void Initialize(Sprite* sprite, uint32_t textureHandle);
+	void Initialize(Sprite* sprite, uint32_t textureHandle, Sprite* spriteKey, uint32_t textureHandleKey);
 
 	bool Update();
 
 	void Draw();
 
 private:
-	// テクスチャハンドル
+	// 背景
 	uint32_t textureHandle_ = 0u;
-	// スプライト
 	Sprite* sprite_;
+	// 
+	uint32_t textureHandleKey_ = 0u;
+	Sprite* spriteKey_;
 
 	Input* input_ = nullptr;
+	
+	uint32_t timer_ = 0;
 };
