@@ -61,44 +61,52 @@ void GameScene::Initialize() {
 
 	// 敵の生成
 	enemy_ = std::make_unique<Enemy>();
-	// 地面の初期化
 	enemy_->Initialize(modelEnemy_.get());
 	
+	// テクスチャ
+	textureHandleTitle_ = TextureManager::Load("title.png");
+	//スプライトの生成
+	spriteTitle_.reset(Sprite::Create(textureHandleTitle_, {0, 0}));
+
 	// 軸方向表示の表示を有効にする
-	AxisIndicator::GetInstance()->SetVisible(true);
+	//AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+	//AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
 }
 
 void GameScene::Update() {
-	// 自キャラの更新
-	player_->Update();
+	switch (sceneMode_) {
+	case 0:
+		// 自キャラの更新
+		player_->Update();
 
-	skydome_->Update();
+		skydome_->Update();
 
-	ground_->Update();
+		ground_->Update();
 
-	enemy_->Update();
+		enemy_->Update();
 
-	followCamera_->Update();
+		followCamera_->Update();
 
-	// 追従カメラのびゅ0行列をゲームシーンのビュープロジェクションにコピー
-	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+		// 追従カメラのびゅ0行列をゲームシーンのビュープロジェクションにコピー
+		viewProjection_.matView = followCamera_->GetViewProjection().matView;
 
-	// 追従カメラのプロジェクション行列をゲームシーンのビュープロジェクションにコピー
-	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+		// 追従カメラのプロジェクション行列をゲームシーンのビュープロジェクションにコピー
+		viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 
-	//ゲームシーンのビュープロジェクション行列の転送処理
-	viewProjection_.TransferMatrix();
+		// ゲームシーンのビュープロジェクション行列の転送処理
+		viewProjection_.TransferMatrix();
 
-	// 衝突判定
-	if (enemy_->GetY() == 0) {
-		float dx = abs(player_->GetX() - enemy_->GetX());
-		float dz = abs(player_->GetZ() - enemy_->GetZ());
-		if (dx < 2 && dz < 2) {
-			enemy_->Hit();
+		// 衝突判定
+		if (enemy_->GetY() == 0) {
+			float dx = abs(player_->GetX() - enemy_->GetX());
+			float dz = abs(player_->GetZ() - enemy_->GetZ());
+			if (dx < 2 && dz < 2) {
+				enemy_->Hit();
+			}
 		}
+		break;
 	}
 }
 
@@ -124,16 +132,18 @@ void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
+	switch (sceneMode_) {
+	case 0:
+		// 自キャラの描画
+		player_->Draw(viewProjection_);
 
-	// 自キャラの描画
-	player_->Draw(viewProjection_);
+		skydome_->Draw(viewProjection_);
 
-	skydome_->Draw(viewProjection_);
+		ground_->Draw(viewProjection_);
 
-	ground_->Draw(viewProjection_);
-
-	enemy_->Draw(viewProjection_);
-
+		enemy_->Draw(viewProjection_);
+		break;
+	}
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
