@@ -34,6 +34,11 @@ public:
 	// 富裕ギミック更新
 	void UpdateFloatingGimmick();
 
+	// 座標の獲得
+	float GetX() { return worldTransform_.matWorld_.m[3][0]; }
+	float GetY() { return worldTransform_.matWorld_.m[3][1]; }
+	float GetZ() { return worldTransform_.matWorld_.m[3][2]; }
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;

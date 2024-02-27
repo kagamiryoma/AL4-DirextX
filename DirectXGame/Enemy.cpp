@@ -9,7 +9,6 @@ void Enemy::Initialize(Model* model) {
 
 	worldTransform_.Initialize();
 
-
 }
 
 void Enemy::Update() { 
@@ -25,10 +24,27 @@ void Enemy::Update() {
 	// 移動
 	worldTransform_.translation_ += move;
 
+	// ジャンプ処理
+	if (jumpFlag_ == true) {
+		worldTransform_.translation_.y += jumpSpeed_;
+		// 重力
+		jumpSpeed_ -= 0.1f;
+		//	もしもY座標が地面よりもしたいかだったら着地
+		if (worldTransform_.translation_.y <= 0) {
+			jumpFlag_ = false;
+			worldTransform_.translation_.y = 0;
+		}
+	}
+
 	// 行列を更新
 	worldTransform_.UpdateMatrix();
 }
 
 void Enemy::Draw(ViewProjection& viewProjection_) {
 	modelSkydome_->Draw(worldTransform_, viewProjection_);
+}
+
+void Enemy::Hit() { 
+	jumpFlag_ = true;
+	jumpSpeed_ = 1.0f;
 }

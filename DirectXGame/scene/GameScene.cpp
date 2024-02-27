@@ -6,7 +6,6 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
-	
 	 }
 
 void GameScene::Initialize() {
@@ -93,23 +92,14 @@ void GameScene::Update() {
 	//ゲームシーンのビュープロジェクション行列の転送処理
 	viewProjection_.TransferMatrix();
 
-//	debugCamera_->Update();
-//
-//	#ifdef _DEBUG
-//	if (input_->TriggerKey(DIK_SPACE)) {
-//		isDebugCameraActive_ = true;
-//	}
-//#endif // _DEBUG
-//
-//	if (isDebugCameraActive_) {
-//		debugCamera_->Update();
-//		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-//		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-//		// ビュープロジェクション行列の転送
-//		viewProjection_.TransferMatrix();
-//	} else {
-//		{ viewProjection_.UpdateMatrix(); }
-//	}
+	// 衝突判定
+	if (enemy_->GetY() == 0) {
+		float dx = abs(player_->GetX() - enemy_->GetX());
+		float dz = abs(player_->GetZ() - enemy_->GetZ());
+		if (dx < 2 && dz < 2) {
+			enemy_->Hit();
+		}
+	}
 }
 
 void GameScene::Draw() {
