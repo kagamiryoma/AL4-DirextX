@@ -2,6 +2,7 @@
 
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "MathUtilityForText.h"
 
 class FollowCamera {
 public:

@@ -49,7 +49,8 @@ void GameScene::Initialize() {
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 
-	
+	// 自キャラのワールドトランスフォームを追従カメラにセット
+	followCamera_->SetTarget(&player_->GetWorldTransform());
 	
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -66,23 +67,34 @@ void GameScene::Update() {
 
 	ground_->Update();
 
-	debugCamera_->Update();
+	followCamera_->Update();
 
-	#ifdef _DEBUG
-	if (input_->TriggerKey(DIK_SPACE)) {
-		isDebugCameraActive_ = true;
-	}
-#endif // _DEBUG
+	// 追従カメラのびゅ0行列をゲームシーンのビュープロジェクションにコピー
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
 
-	if (isDebugCameraActive_) {
-		debugCamera_->Update();
-		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行列の転送
-		viewProjection_.TransferMatrix();
-	} else {
-		{ viewProjection_.UpdateMatrix(); }
-	}
+	// 追従カメラのプロジェクション行列をゲームシーンのビュープロジェクションにコピー
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+
+	//ゲームシーンのビュープロジェクション行列の転送処理
+	viewProjection_.TransferMatrix();
+
+//	debugCamera_->Update();
+//
+//	#ifdef _DEBUG
+//	if (input_->TriggerKey(DIK_SPACE)) {
+//		isDebugCameraActive_ = true;
+//	}
+//#endif // _DEBUG
+//
+//	if (isDebugCameraActive_) {
+//		debugCamera_->Update();
+//		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+//		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+//		// ビュープロジェクション行列の転送
+//		viewProjection_.TransferMatrix();
+//	} else {
+//		{ viewProjection_.UpdateMatrix(); }
+//	}
 }
 
 void GameScene::Draw() {

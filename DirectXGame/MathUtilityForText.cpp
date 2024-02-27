@@ -1,4 +1,4 @@
-#include "MathUntilityForText.h"
+#include "MathUtilityForText.h"
 #include <cassert>
 #include <cmath>
 

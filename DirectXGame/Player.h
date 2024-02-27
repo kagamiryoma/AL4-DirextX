@@ -3,7 +3,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "Input.h"
-#include "MathUntilityForText.h"
+#include "MathUtilityForText.h"
 
 
 /// <summary>
@@ -25,6 +25,8 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
+
+	const WorldTransform& GetWorldTransform() { return worldTransform_; }
 
 private:
 	// ワールド変換データ
