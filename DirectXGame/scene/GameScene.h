@@ -14,6 +14,7 @@
 #include "Ground.h"
 #include "DebugCamera.h"
 #include "FollowCamera.h"
+#include "Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -70,6 +71,8 @@ private: // メンバ変数
 	std::unique_ptr<Ground> ground_;
 	// 地面モデル
 	std::unique_ptr<Model> modelGround_;
+	// 敵
+	std::unique_ptr<Enemy> enemy_;
 
 	bool isDebugCameraActive_ = false;
 	std::unique_ptr<DebugCamera> debugCamera_;
@@ -81,4 +84,5 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelFighterHead_;
 	std::unique_ptr<Model> modelFighterL_arm_;
 	std::unique_ptr<Model> modelFighterR_arm_;
+	std::unique_ptr<Model> modelEnemy_;
 };

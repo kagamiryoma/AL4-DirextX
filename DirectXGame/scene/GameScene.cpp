@@ -25,6 +25,7 @@ void GameScene::Initialize() {
 	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
 	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
 	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
+	modelEnemy_.reset(Model::CreateFromOBJ("needle_Body", true));
 	// 自キャラの生成
 	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
@@ -58,6 +59,11 @@ void GameScene::Initialize() {
 
 	// 自キャラのワールドトランスフォームを追従カメラにセット
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+	// 敵の生成
+	enemy_ = std::make_unique<Enemy>();
+	// 地面の初期化
+	enemy_->Initialize(modelEnemy_.get());
 	
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -73,6 +79,8 @@ void GameScene::Update() {
 	skydome_->Update();
 
 	ground_->Update();
+
+	enemy_->Update();
 
 	followCamera_->Update();
 
@@ -133,6 +141,8 @@ void GameScene::Draw() {
 	skydome_->Draw(viewProjection_);
 
 	ground_->Draw(viewProjection_);
+
+	enemy_->Draw(viewProjection_);
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
