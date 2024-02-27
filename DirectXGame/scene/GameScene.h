@@ -16,6 +16,7 @@
 #include "FollowCamera.h"
 #include "Enemy.h"
 #include "Title.h"
+#include "GameClear.h"
 
 /// <summary>
 /// ゲームシーン
@@ -76,6 +77,8 @@ private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	// タイトル
 	std::unique_ptr<Title> title_;
+	// ゲームクリア
+	std::unique_ptr<GameClear> gameClear_;
 
 	bool isDebugCameraActive_ = false;
 	std::unique_ptr<DebugCamera> debugCamera_;
@@ -97,7 +100,13 @@ private: // メンバ変数
 	uint32_t textureHandleKey_ = 0u;
 	std::unique_ptr<Sprite> spriteKey_;
 
+	// ゲームクリア
+	uint32_t textureHandleGameClear_ = 0u;
+	std::unique_ptr<Sprite> spriteGameClear_;
+
 	// シーンモード（０ : ゲームプレイ、 １ : タイトル、 ２ : ゲームクリア）
 	uint32_t sceneMode_ = 1u;
+
+	uint32_t hitCount_ = 0;
 
 };

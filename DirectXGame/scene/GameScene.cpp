@@ -71,10 +71,19 @@ void GameScene::Initialize() {
 	textureHandleKey_ = TextureManager::Load("enter.png");
 	spriteKey_.reset(Sprite::Create(textureHandleKey_, {400, 500}));
 
+		// ゲームクリア背景
+	textureHandleGameClear_ = TextureManager::Load("gameclear.png");
+	spriteGameClear_.reset(Sprite::Create(textureHandleGameClear_, {0, 0}));
+
 	// タイトルの生成
 	title_ = std::make_unique<Title>();
 	title_->Initialize(
 	    spriteTitle_.get(), textureHandleTitle_, spriteKey_.get(), textureHandleKey_);
+
+	// タイトルの生成
+	gameClear_ = std::make_unique<GameClear>();
+	gameClear_->Initialize(
+	    spriteGameClear_.get(), textureHandleGameClear_, spriteKey_.get(), textureHandleKey_);
 
 	// 軸方向表示の表示を有効にする
 	//AxisIndicator::GetInstance()->SetVisible(true);
@@ -112,12 +121,22 @@ void GameScene::Update() {
 			float dz = abs(player_->GetZ() - enemy_->GetZ());
 			if (dx < 2 && dz < 2) {
 				enemy_->Hit();
+				hitCount_++;
 			}
+		}
+		if (hitCount_ >= 10) {
+			sceneMode_ = 2;
 		}
 		break;
 	case 1:
 		if (title_->Update() == true) {
 			sceneMode_ = 0u;
+			hitCount_ = 0;
+		}
+		break;
+	case 2:
+		if (gameClear_->Update() == true) {
+			sceneMode_ = 1u;
 		}
 		break;
 	}
@@ -176,6 +195,9 @@ void GameScene::Draw() {
 		switch (sceneMode_) {
 	case 1:
 		title_->Draw();
+		break;
+	case 2:
+		gameClear_->Draw();
 		break;
 	}
 	// スプライト描画後処理
