@@ -68,6 +68,10 @@ void GameScene::Initialize() {
 	//スプライトの生成
 	spriteTitle_.reset(Sprite::Create(textureHandleTitle_, {0, 0}));
 
+	// 敵の生成
+	title_ = std::make_unique<Title>();
+	title_->Initialize(spriteTitle_.get(),textureHandleTitle_);
+
 	// 軸方向表示の表示を有効にする
 	//AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
@@ -105,6 +109,11 @@ void GameScene::Update() {
 			if (dx < 2 && dz < 2) {
 				enemy_->Hit();
 			}
+		}
+		break;
+	case 1:
+		if (title_->Update() == true) {
+			sceneMode_ = 0u;
 		}
 		break;
 	}
@@ -160,6 +169,11 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
+		switch (sceneMode_) {
+	case 1:
+		title_->Draw();
+		break;
+	}
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

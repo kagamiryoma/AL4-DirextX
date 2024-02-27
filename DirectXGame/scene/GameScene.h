@@ -15,6 +15,7 @@
 #include "DebugCamera.h"
 #include "FollowCamera.h"
 #include "Enemy.h"
+#include "Title.h"
 
 /// <summary>
 /// ゲームシーン
@@ -73,6 +74,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelGround_;
 	// 敵
 	std::unique_ptr<Enemy> enemy_;
+	// タイトル
+	std::unique_ptr<Title> title_;
 
 	bool isDebugCameraActive_ = false;
 	std::unique_ptr<DebugCamera> debugCamera_;
