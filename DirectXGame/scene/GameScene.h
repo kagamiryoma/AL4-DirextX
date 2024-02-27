@@ -60,8 +60,6 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
-	// モデル
-	std::unique_ptr<Model> model_;
 	// 自キャラ
 	std::unique_ptr<Player> player_;
 	// 天球
@@ -78,4 +76,9 @@ private: // メンバ変数
 
 	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+
+	std::unique_ptr<Model> modelFighterBody_;
+	std::unique_ptr<Model> modelFighterHead_;
+	std::unique_ptr<Model> modelFighterL_arm_;
+	std::unique_ptr<Model> modelFighterR_arm_;
 };

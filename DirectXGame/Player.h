@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model);
+	void Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
 
 	/// <summary>
 	/// 更新
@@ -28,13 +28,29 @@ public:
 
 	const WorldTransform& GetWorldTransform() { return worldTransform_; }
 
+	// 浮遊ギミック
+	void InitializeFloatingGimmick();
+
+	// 富裕ギミック更新
+	void UpdateFloatingGimmick();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	// モデル
-	Model* model_ = nullptr;
+	WorldTransform worldTransformBody_;
+	WorldTransform worldTransformHead_;
+	WorldTransform worldTransform_L_arm_;
+	WorldTransform worldTransform_R_arm_;
+	// 3Dモデル
+	Model* modelFighterBody_;
+	Model* modelFighterHead_;
+	Model* modelFighterL_arm_;
+	Model* modelFighterR_arm_;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// キーボード入力
 	Input* input_ = nullptr;
+
+	// 富裕ギミックの媒介変数
+	float floatingParameter_ = 0.0f;
 };
