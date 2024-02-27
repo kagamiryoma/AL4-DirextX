@@ -71,9 +71,13 @@ void GameScene::Initialize() {
 	textureHandleKey_ = TextureManager::Load("enter.png");
 	spriteKey_.reset(Sprite::Create(textureHandleKey_, {400, 500}));
 
-		// ゲームクリア背景
+	// ゲームクリア背景
 	textureHandleGameClear_ = TextureManager::Load("gameclear.png");
 	spriteGameClear_.reset(Sprite::Create(textureHandleGameClear_, {0, 0}));
+
+	// フェード
+	textureHandleBlack_ = TextureManager::Load("black.png");
+	spriteBlack_.reset(Sprite::Create(textureHandleBlack_, {0, 0}));
 
 	// タイトルの生成
 	title_ = std::make_unique<Title>();
@@ -84,6 +88,10 @@ void GameScene::Initialize() {
 	gameClear_ = std::make_unique<GameClear>();
 	gameClear_->Initialize(
 	    spriteGameClear_.get(), textureHandleGameClear_, spriteKey_.get(), textureHandleKey_);
+
+	// フェードの生成
+	fade_ = std::make_unique<Fade>();
+	fade_->Initialize(spriteBlack_.get(), textureHandleBlack_);
 
 	// 軸方向表示の表示を有効にする
 	//AxisIndicator::GetInstance()->SetVisible(true);
@@ -126,20 +134,25 @@ void GameScene::Update() {
 		}
 		if (hitCount_ >= 10) {
 			sceneMode_ = 2;
+			fade_->FadeInStart();
 		}
 		break;
 	case 1:
 		if (title_->Update() == true) {
 			sceneMode_ = 0u;
 			hitCount_ = 0;
+			fade_->FadeInStart();
 		}
 		break;
 	case 2:
 		if (gameClear_->Update() == true) {
 			sceneMode_ = 1u;
+			fade_->FadeInStart();
 		}
 		break;
 	}
+
+	fade_->Update();
 }
 
 void GameScene::Draw() {
@@ -200,6 +213,9 @@ void GameScene::Draw() {
 		gameClear_->Draw();
 		break;
 	}
+
+		fade_->Draw();
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

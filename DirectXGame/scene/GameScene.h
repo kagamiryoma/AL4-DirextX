@@ -17,6 +17,7 @@
 #include "Enemy.h"
 #include "Title.h"
 #include "GameClear.h"
+#include "Fade.h"
 
 /// <summary>
 /// ゲームシーン
@@ -79,6 +80,8 @@ private: // メンバ変数
 	std::unique_ptr<Title> title_;
 	// ゲームクリア
 	std::unique_ptr<GameClear> gameClear_;
+	// フェード
+	std::unique_ptr<Fade> fade_;
 
 	bool isDebugCameraActive_ = false;
 	std::unique_ptr<DebugCamera> debugCamera_;
@@ -103,6 +106,10 @@ private: // メンバ変数
 	// ゲームクリア
 	uint32_t textureHandleGameClear_ = 0u;
 	std::unique_ptr<Sprite> spriteGameClear_;
+
+	// フェード
+	uint32_t textureHandleBlack_ = 0u;
+	std::unique_ptr<Sprite> spriteBlack_;
 
 	// シーンモード（０ : ゲームプレイ、 １ : タイトル、 ２ : ゲームクリア）
 	uint32_t sceneMode_ = 1u;
